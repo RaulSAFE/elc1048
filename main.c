@@ -103,7 +103,7 @@ void tarefa_1(void)
 	for(;;)
 	{
 		a++;
-		TarefaEspera(100);
+		TarefaEspera(1000);
 		port_pin_set_output_level(LED_0_PIN, LED_0_ACTIVE); /* Liga LED. */
 		
 		//TarefaContinua(2);
@@ -119,7 +119,7 @@ void tarefa_2(void)
 	{
 		b++;
 		//TarefaSuspende(2);
-		//TarefaEspera(10);	
+		TarefaEspera(10);	
 		k=100000;while(--k);
 		port_pin_set_output_level(LED_0_PIN, !LED_0_ACTIVE); 	/* Turn LED off. */
 		
