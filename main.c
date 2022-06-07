@@ -77,9 +77,9 @@ int main(void)
 	/* Criacao das tarefas */
 	/* Parametros: ponteiro, nome, ponteiro da pilha, tamanho da pilha, prioridade da tarefa */
 	
-	CriaTarefa(tarefa_1, "Tarefa 1", PILHA_TAREFA_1, TAM_PILHA_1, 2);
+	CriaTarefa(tarefa_7, "Tarefa 7", PILHA_TAREFA_7, TAM_PILHA_7, 1);
 	
-	CriaTarefa(tarefa_2, "Tarefa 2", PILHA_TAREFA_2, TAM_PILHA_2, 1);
+	CriaTarefa(tarefa_8, "Tarefa 8", PILHA_TAREFA_8, TAM_PILHA_8, 2);
 	
 	/* Cria tarefa ociosa do sistema */
 	CriaTarefa(tarefa_ociosa,"Tarefa ociosa", PILHA_TAREFA_OCIOSA, TAM_PILHA_OCIOSA, 0);
@@ -193,7 +193,7 @@ void tarefa_6(void)
 /* soluçao com buffer compartihado */
 /* Tarefas de exemplo que usam funcoes de semaforo */
 
-#define TAM_BUFFER 10
+#define TAM_BUFFER 20
 uint8_t buffer[TAM_BUFFER]; /* declaracao de um buffer (vetor) ou fila circular */
 
 semaforo_t SemaforoCheio = {0,0}; /* declaracao e inicializacao de um semaforo */
@@ -213,7 +213,7 @@ void tarefa_7(void)
 		i = (i+1)%TAM_BUFFER;
 		
 		SemaforoLibera(&SemaforoCheio); /* tarefa libera semaforo para tarefa que esta esperando-o */
-		
+		port_pin_set_output_level(LED_0_PIN, LED_0_ACTIVE);
 		TarefaEspera(10); 	/* tarefa se coloca em espera por 10 marcas de tempo (ticks), equivale a 10ms */		
 	}
 }
@@ -222,7 +222,7 @@ void tarefa_7(void)
 void tarefa_8(void)
 {
 	static uint8_t f = 0;
-	volatile uint8_t valor;
+	volatile uint32_t valor, k = 0;
 		
 	for(;;)
 	{
@@ -244,6 +244,9 @@ void tarefa_8(void)
 		
 		valor = buffer[f];
 		f = (f+1) % TAM_BUFFER;		
+		
+		k=100000;while(--k);
+		port_pin_set_output_level(LED_0_PIN, !LED_0_ACTIVE);
 		
 		SemaforoLibera(&SemaforoVazio);
 	}
