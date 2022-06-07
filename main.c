@@ -114,13 +114,11 @@ void tarefa_1(void)
 
 void tarefa_2(void)
 {
-	volatile uint32_t b,k = 0;
+	volatile uint32_t b;
 	for(;;)
 	{
 		b++;
-		//TarefaSuspende(2);
-		TarefaEspera(10);	
-		k=100000;while(--k);
+		TarefaEspera(500);	
 		port_pin_set_output_level(LED_0_PIN, !LED_0_ACTIVE); 	/* Turn LED off. */
 		
 		
